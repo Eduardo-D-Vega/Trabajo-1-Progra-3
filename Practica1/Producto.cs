@@ -36,5 +36,4 @@ namespace Practica1
             Console.WriteLine("El producto fue registrado correctamente\n");
         }
 
-    }
 }
