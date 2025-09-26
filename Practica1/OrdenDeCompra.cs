@@ -11,6 +11,6 @@ namespace Practica1
         int NumUnico { get; set; }
         int Fechac { get; set; }
 
-        //Proveedor proveedor { get; set; }
+        Proveedor proveedor { get; set; }
     }
 }
