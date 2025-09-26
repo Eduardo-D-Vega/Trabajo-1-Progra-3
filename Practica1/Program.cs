@@ -5,3 +5,7 @@ public class prueba()
 {
     
 }
+public class prueba2()
+{
+
+}
