@@ -27,6 +27,7 @@ static void MostrarMenu()
 static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, List<OrdenDeCompra> ordenes)
 {
     try
+
     {
         Console.Write("Seleccione una opción: ");
         int opcion = int.Parse(Console.ReadLine());
@@ -34,8 +35,8 @@ static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> produ
         switch (opcion)
         {
             case 1:
-                Proveedor nuevoProveedor = new Proveedor();
-                nuevoProveedor.AgregarProveedor(proveedores);
+                //Proveedor nuevoProveedor = new Proveedor();
+                //nuevoProveedor.AgregarProveedor(proveedores);
                 break;
             case 2:
                 //RegistrarProducto(productos);

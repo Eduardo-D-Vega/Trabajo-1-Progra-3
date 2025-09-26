@@ -11,7 +11,7 @@ namespace Practica1
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal PrecioUnidad { get; set; }
-    
+
         public Producto(string nombre, string descripcion, decimal precio)
         {
             Nombre = nombre;
@@ -35,5 +35,5 @@ namespace Practica1
 
             Console.WriteLine("El producto fue registrado correctamente\n");
         }
-
+    }
 }

@@ -18,6 +18,21 @@ namespace Practica1
             Id = id;    
             Contacto = contacto;
         }
+        public void RegistrarProveedor(List<Proveedor> proveedores) 
+        {
+            Console.WriteLine("Ingrese el nombre del producto:");
+            string nombre = Console.ReadLine();
 
+            Console.WriteLine("Ingrese el número de identificación fiscal del proveedor:");
+            string descripcion = (Console.ReadLine());
+
+            Console.WriteLine("Ingrese el contacto del proveedor:");
+            decimal precio = int.Parse(Console.ReadLine());
+
+            Producto nuevoproducto = new Producto(nombre, descripcion, precio);
+            productos.Add(nuevoproducto);
+
+            Console.WriteLine("El producto fue registrado correctamente\n");
+        }
     }
 }
