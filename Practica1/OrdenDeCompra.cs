@@ -8,9 +8,13 @@ namespace Practica1
 {
     public class OrdenDeCompra
     {
-        int NumUnico { get; set; }
-        int Fechac { get; set; }
-
-        Proveedor proveedor { get; set; }
+        public int NumUnico { get; set; }
+        public int Fecha { get; set; }
+        
+        public OrdenDeCompra(int numUnico, int fecha) 
+        {
+            NumUnico = numUnico;
+            Fecha = fecha; 
+        }
     }
 }
