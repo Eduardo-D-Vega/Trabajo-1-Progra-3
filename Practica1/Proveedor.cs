@@ -11,30 +11,13 @@ namespace Practica1
         public string Nombre { get; set; }
         public int Id { get; set; }
         public int Contacto { get; set; }
-        
+
         public Proveedor(string nombre, int id, int contacto)
         {
             Nombre = nombre;
-            Id = id;
+            Id = id;    
             Contacto = contacto;
         }
 
-        public void AgregarProveedor(List<Proveedor> proveedores)
-        {
-            Console.WriteLine("Ingrese el nombre del proveedor:");
-            string nombre = Console.ReadLine();
-
-            Console.WriteLine("Ingrese el número de identificación fiscal del proveedor:");
-            int id = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Ingrese el contacto del proveedor:");
-            int contacto = int.Parse(Console.ReadLine());
-
-            Proveedor nuevoproveedor = new Proveedor(nombre, id, contacto);
-            proveedores.Add(nuevoproveedor);
-
-            Console.WriteLine("El proveedor fue agregado correctamente\n");
-        }
     }
 }
-
