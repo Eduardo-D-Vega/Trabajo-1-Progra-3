@@ -32,7 +32,7 @@ namespace Practica1
             Proveedor nuevoproveedor = new Proveedor(nombre, id, contacto);
             proveedores.Add(nuevoproveedor);
 
-            Console.WriteLine("El producto fue registrado correctamente\n");
+            Console.WriteLine("El proveedor fue registrado correctamente\n");
         }
     }
 }

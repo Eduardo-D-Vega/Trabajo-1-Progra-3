@@ -3,6 +3,7 @@
 List<Proveedor> proveedores = new List<Proveedor>();
 List<Producto> productos = new List<Producto>();
 List<OrdenDeCompra> ordenes = new List<OrdenDeCompra>();
+List<ListaItem> cantidadProducto = new List<ListaItem>(); 
 
 bool menu = true;
 
@@ -42,7 +43,15 @@ static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> produ
                 //RegistrarProducto(productos);
                 break;
             case 3:
-                //CrearOrdenDeCompra
+                OrdenDeCompra nuevo = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
+                nuevo.SeleccionarProveedor(proveedores);
+                List<ListaItem> cantidadProducto = new List<ListaItem>();
+                nuevo.AgregarProductos(productos, cantidadProducto);
+                
+                nuevo.ValorTotalOrdenCompra(cantidadProducto);
+                ordenes.Add(nuevo);
+
+                Console.WriteLine("\nLa orden de compra fue creada correctamente\n");
                 break;
             case 4:
                 // Visualizar ordenes
