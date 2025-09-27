@@ -12,10 +12,11 @@ namespace Practica1
         public DateTime Fecha { get; set; }
         public Proveedor ProveedorSeleccionado { get; set; }
 
-        public OrdenDeCompra(int id, DateTime fecha, Proveedor proveedor)
+        public OrdenDeCompra(int id, DateTime fecha)
         {
             NumUnico = id;
             Fecha = fecha;
+            ProveedorSeleccionado = null;
         }
 
         public void SeleccionarProveedor(List<Proveedor> proveedores)
@@ -42,14 +43,10 @@ namespace Practica1
         
         public void AgregarProductos(List<Producto> productos, List<ListaItem> listaItems)
         {
-            // Si la lista está vacía, repetir hasta que haya productos
             while (productos.Count == 0)
             {
-                Console.WriteLine("La lista de productos está vacía, por favor agregue productos primero.\n");
-                // Aquí podrías llamar a un método de registrar productos
-                // o simplemente esperar a que Program agregue productos
-                Console.WriteLine("Presione Enter para volver a intentar...");
-                Console.ReadLine();
+                Console.WriteLine("La lista está vacía, debe agregar productos antes\n");
+                return; //vuelve al menu
             }
 
             bool continuar = true;
@@ -71,28 +68,28 @@ namespace Practica1
                 if (cantidadProducto < 1)
                 {
                     Console.WriteLine("La cantidad ingresada debe ser mayor a cero\n");
-                    continue; //Volver a pedir que ingrese la cantidad
+                    continue;
                 }
 
                 listaItems.Add(new ListaItem(ProductoSeleccionado, cantidadProducto));
                 Console.WriteLine("El producto fue agregado a la orden de compra");
 
-                Console.Write("¿Digite si o no si desea agregar otro producto? ");
+                Console.Write("¿Digite 'si o no' si desea agregar otro producto? ");
                 continuar = Console.ReadLine().ToLower() == "si";
             }
         }
 
-        public void ValorTotalOrdenCompra(List<ListaItem> listaCantidadProductos)
+        public decimal ValorTotalOrdenCompra(List<ListaItem> listaCantidadProductos)
         {
-            decimal total = 0;
+            decimal ValorTotal = 0;
 
             foreach (var items in listaCantidadProductos)
             {
-                total += items.Producto.PrecioUnidad * items.Cantidad;
+                ValorTotal += items.Producto.PrecioUnidad * items.Cantidad;
             }
 
-            Console.WriteLine($"\nEl valor total de la orden de compra es de: {total}\n");
-            
+            Console.WriteLine($"\nEl valor total de la orden de compra es de: {ValorTotal}\n");
+            return ValorTotal;   
         }
 
     }

@@ -14,7 +14,7 @@ do
 
 } while (menu);
 
-static void MostrarMenu()
+static void MostrarMenu() 
 {
     Console.WriteLine("\n=== MENU PRINCIPAL ===");
     Console.WriteLine("1. Registrar proveedor");
@@ -25,10 +25,9 @@ static void MostrarMenu()
     Console.WriteLine("6. Salir de la aplicacion");
 }
 
-static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, List<OrdenDeCompra> ordenes)
+bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, List<OrdenDeCompra> ordenDeCompras)
 {
     try
-
     {
         Console.Write("Seleccione una opción: ");
         int opcion = int.Parse(Console.ReadLine());
@@ -43,14 +42,26 @@ static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> produ
                 //RegistrarProducto(productos);
                 break;
             case 3:
+                if (proveedores.Count == 0)
+                {
+                    Console.WriteLine("\nDebe registrar un proveedor antes de crear una orden de compra\n");
+                    break; //vuelve al menu
+                }
+
+                if (productos.Count == 0)
+                {
+                    Console.WriteLine("\nLa lista de productos esta vacía, agregue productos antes\n");
+                    break; 
+                }
+
                 OrdenDeCompra nuevo = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
                 nuevo.SeleccionarProveedor(proveedores);
-                List<ListaItem> cantidadProducto = new List<ListaItem>();
                 nuevo.AgregarProductos(productos, cantidadProducto);
-                
-                nuevo.ValorTotalOrdenCompra(cantidadProducto);
-                ordenes.Add(nuevo);
 
+                decimal ValorTotal = 0;
+                ValorTotal = nuevo.ValorTotalOrdenCompra(cantidadProducto);
+                Console.WriteLine($"El valor de la orden de compra es de: {ValorTotal}");
+                ordenes.Add(nuevo);
                 Console.WriteLine("\nLa orden de compra fue creada correctamente\n");
                 break;
             case 4:

@@ -11,7 +11,6 @@ namespace Practica1
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
 
-        // Constructor que recibe producto y cantidad
         public ListaItem(Producto producto, int cantidad)
         {
             Producto = producto;
