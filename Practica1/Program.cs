@@ -43,13 +43,13 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
             case 3:
                 if (proveedores.Count == 0)
                 {
-                    Console.WriteLine("\nDebe registrar un proveedor antes de crear una orden de compra\n");
+                    Console.WriteLine("Debe registrar un proveedor antes de crear una orden de compra\n");
                     break; //vuelve al menu
                 }
 
                 if (productos.Count == 0)
                 {
-                    Console.WriteLine("\nLa lista de productos esta vacía, agregue productos antes\n");
+                    Console.WriteLine("La lista de productos esta vacía, agregue productos antes\n");
                     break; 
                 }
 
@@ -59,9 +59,9 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
 
                 decimal ValorTotal = 0;
                 ValorTotal = nuevo.ValorTotalOrdenCompra(cantidadProducto);
-                Console.WriteLine($"El valor de la orden de compra es de: {ValorTotal}");
+                Console.WriteLine($"\nEl valor de la orden de compra es de: {ValorTotal}");
                 ordenes.Add(nuevo);
-                Console.WriteLine("\nLa orden de compra fue creada correctamente\n");
+                Console.WriteLine("La orden de compra fue creada correctamente\n");
                 break;
             case 4:
                 // Visualizar ordenes

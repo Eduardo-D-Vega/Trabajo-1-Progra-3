@@ -23,11 +23,11 @@ namespace Practica1
         {
             if (proveedores.Count == 0)
             {
-                Console.WriteLine("No hay proveedores registrados\n");
+                Console.WriteLine("\nNo hay proveedores registrados\n");
                 return; //Tiene que volver a pedir que seleccione un proveedor
             }
 
-            Console.WriteLine("Seleccione un proveedor de la lista");
+            Console.WriteLine("--Seleccione un proveedor de la lista--");
 
             for (int i = 0; i < proveedores.Count; i++)
             {
@@ -45,14 +45,14 @@ namespace Practica1
         {
             while (productos.Count == 0)
             {
-                Console.WriteLine("La lista está vacía, debe agregar productos antes\n");
+                Console.WriteLine("\nLa lista está vacía, debe agregar productos antes de continuar\n");
                 return; //vuelve al menu
             }
 
             bool continuar = true;
             while (continuar)
             {
-                Console.WriteLine("Seleccione un producto de la lista\n");
+                Console.WriteLine("Seleccione un producto de la lista");
 
                 for (int i = 0; i < productos.Count; i++)
                 {
@@ -67,12 +67,12 @@ namespace Practica1
 
                 if (cantidadProducto < 1)
                 {
-                    Console.WriteLine("La cantidad ingresada debe ser mayor a cero\n");
+                    Console.WriteLine("\nLa cantidad ingresada debe ser mayor a cero\n");
                     continue;
                 }
 
                 listaItems.Add(new ListaItem(ProductoSeleccionado, cantidadProducto));
-                Console.WriteLine("El producto fue agregado a la orden de compra");
+                Console.WriteLine("\nEl producto fue agregado a la orden de compra");
 
                 Console.Write("¿Digite 'si o no' si desea agregar otro producto? ");
                 continuar = Console.ReadLine().ToLower() == "si";

@@ -19,21 +19,21 @@ namespace Practica1
             PrecioUnidad = precio;
         }
 
-        public void RegistrarProducto(List<Producto> productos)
+        public static void RegistrarProducto(List<Producto> productos)
         {
-            Console.WriteLine("Ingrese el nombre del producto\n");
+            Console.WriteLine("Ingrese el nombre del producto:");
             string nombre = Console.ReadLine();
 
-            Console.WriteLine("Ingrese la descripción del producto\n");
+            Console.WriteLine("Ingrese la descripción del producto:");
             string descripcion = (Console.ReadLine());
 
-            Console.WriteLine("Ingrese el precio por unidad\n");
+            Console.WriteLine("Ingrese el precio por unidad:");
             decimal precio = decimal.Parse(Console.ReadLine());
 
             Producto nuevoproducto = new Producto(nombre, descripcion, precio);
             productos.Add(nuevoproducto);
 
-            Console.WriteLine("El producto fue registrado correctamente\n");
+            Console.WriteLine("\nEl producto fue registrado correctamente\n");
         }
     }
 }
