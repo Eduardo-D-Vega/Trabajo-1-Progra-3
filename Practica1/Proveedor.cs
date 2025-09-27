@@ -20,17 +20,17 @@ namespace Practica1
         }
         public void RegistrarProveedor(List<Proveedor> proveedores) 
         {
-            Console.WriteLine("Ingrese el nombre del producto:");
+            Console.WriteLine("Ingrese el nombre del proveedor:");
             string nombre = Console.ReadLine();
 
             Console.WriteLine("Ingrese el número de identificación fiscal del proveedor:");
-            string descripcion = (Console.ReadLine());
+            int id = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Ingrese el contacto del proveedor:");
-            decimal precio = int.Parse(Console.ReadLine());
+            int contacto = int.Parse(Console.ReadLine());
 
-            Producto nuevoproducto = new Producto(nombre, descripcion, precio);
-            productos.Add(nuevoproducto);
+            Proveedor nuevoproveedor = new Proveedor(nombre, id, contacto);
+            proveedores.Add(nuevoproveedor);
 
             Console.WriteLine("El producto fue registrado correctamente\n");
         }
