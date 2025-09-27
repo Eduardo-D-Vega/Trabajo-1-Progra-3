@@ -35,8 +35,7 @@ static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> produ
         switch (opcion)
         {
             case 1:
-                //Proveedor nuevoProveedor = new Proveedor();
-                //nuevoProveedor.AgregarProveedor(proveedores);
+                Proveedor.RegistrarProveedor(proveedores);
                 break;
             case 2:
                 //RegistrarProducto(productos);
