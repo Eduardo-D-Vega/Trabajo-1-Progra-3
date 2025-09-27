@@ -38,7 +38,7 @@ static bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> produ
                 Proveedor.RegistrarProveedor(proveedores);
                 break;
             case 2:
-                //RegistrarProducto(productos);
+                Producto.RegistrarProducto(productos);
                 break;
             case 3:
                 //CrearOrdenDeCompra

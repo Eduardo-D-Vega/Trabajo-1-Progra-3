@@ -19,7 +19,7 @@ namespace Practica1
             PrecioUnidad = precio;
         }
 
-        public void AgregarProducto(List<Producto> productos)
+        public static void RegistrarProducto(List<Producto> productos)
         {
             Console.WriteLine("Ingrese el nombre del producto:");
             string nombre = Console.ReadLine();
