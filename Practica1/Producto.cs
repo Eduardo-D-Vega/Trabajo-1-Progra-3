@@ -11,27 +11,28 @@ namespace Practica1
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal PrecioUnidad { get; set; }
+        public int almacen { get; set; } //cantidad de productos disponibles en el inventario
 
         public Producto(string nombre, string descripcion, decimal precio)
         {
             Nombre = nombre;
             Descripcion = descripcion;
             PrecioUnidad = precio;
+            almacen = 0;
         }
 
-        public static void RegistrarProducto(List<Producto> productos)
+        public void RegistrarProducto(List<Producto> productos)
         {
             Console.WriteLine("Ingrese el nombre del producto:");
-            string nombre = Console.ReadLine();
+            Nombre = Console.ReadLine();
 
             Console.WriteLine("Ingrese la descripción del producto:");
-            string descripcion = (Console.ReadLine());
+            Descripcion = (Console.ReadLine());
 
             Console.WriteLine("Ingrese el precio por unidad:");
-            decimal precio = decimal.Parse(Console.ReadLine());
+            PrecioUnidad = decimal.Parse(Console.ReadLine());
 
-            Producto nuevoproducto = new Producto(nombre, descripcion, precio);
-            productos.Add(nuevoproducto);
+            productos.Add(this); //se agrega la instancia a la lista principal
 
             Console.WriteLine("\nEl producto fue registrado correctamente\n");
         }

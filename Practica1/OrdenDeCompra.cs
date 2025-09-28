@@ -1,22 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace Practica1
 {
     public class OrdenDeCompra
     {
-        public int NumUnico { get; set; }
-        public DateTime Fecha { get; set; }
+        private int NumUnico { get; set; }
+        private DateTime Fecha { get; set; }
         public Proveedor ProveedorSeleccionado { get; set; }
+        public List<ListaItem> ListaItems { get; set; }  //cada orden de compra tiene su propia lista de items
+        public bool OrdenRecibida { get; set; } 
 
         public OrdenDeCompra(int id, DateTime fecha)
         {
             NumUnico = id;
             Fecha = fecha;
             ProveedorSeleccionado = null;
+            ListaItems = new List<ListaItem>();
         }
 
         public void SeleccionarProveedor(List<Proveedor> proveedores)
@@ -27,7 +32,7 @@ namespace Practica1
                 return; //Tiene que volver a pedir que seleccione un proveedor
             }
 
-            Console.WriteLine("--Seleccione un proveedor de la lista--");
+            Console.WriteLine("\nSeleccione un proveedor de la lista");
 
             for (int i = 0; i < proveedores.Count; i++)
             {
@@ -36,16 +41,16 @@ namespace Practica1
 
             int opcion = int.Parse(Console.ReadLine());
 
-                ProveedorSeleccionado = proveedores[opcion - 1];
+            ProveedorSeleccionado = proveedores[opcion - 1];
 
-                Console.WriteLine($"Proveedor seleccionado: {ProveedorSeleccionado.Nombre}\n");
+            Console.WriteLine($"El proveedor seleccionado es: {ProveedorSeleccionado.Nombre}\n");
         }
         
-        public void AgregarProductos(List<Producto> productos, List<ListaItem> listaItems)
+        public void AgregarProductos(List<Producto> productos)
         {
             while (productos.Count == 0)
             {
-                Console.WriteLine("\nLa lista está vacía, debe agregar productos antes de continuar\n");
+                Console.WriteLine("La lista está vacía, debe agregar productos antes de continuar\n");
                 return; //vuelve al menu
             }
 
@@ -56,22 +61,22 @@ namespace Practica1
 
                 for (int i = 0; i < productos.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. {productos[i].Nombre} → {productos[i].Descripcion}  [Precio: {productos[i].PrecioUnidad:c}]");
+                    Console.WriteLine($"{i + 1} {productos[i].Nombre} - {productos[i].Descripcion} - [Precio: {productos[i].PrecioUnidad}]");
                 }
 
                 int opcion = int.Parse(Console.ReadLine());
                 Producto ProductoSeleccionado = productos[opcion - 1];
 
-                Console.WriteLine($"\nIngrese la cantidad de productos que desea: ");
+                Console.WriteLine("Ingrese la cantidad de productos que desea: ");
                 int cantidadProducto = int.Parse(Console.ReadLine());
 
                 if (cantidadProducto < 1)
                 {
-                    Console.WriteLine("\nLa cantidad ingresada debe ser mayor a cero\n");
+                    Console.WriteLine("La cantidad ingresada debe ser mayor a cero\n");
                     continue;
                 }
 
-                listaItems.Add(new ListaItem(ProductoSeleccionado, cantidadProducto));
+                ListaItems.Add(new ListaItem(ProductoSeleccionado, cantidadProducto));
                 Console.WriteLine("\nEl producto fue agregado a la orden de compra");
 
                 Console.Write("¿Digite 'si o no' si desea agregar otro producto? ");
@@ -79,20 +84,53 @@ namespace Practica1
             }
         }
 
-        public decimal ValorTotalOrdenCompra(List<ListaItem> listaCantidadProductos)
+        public decimal ValorTotalOrdenCompra()
         {
             decimal ValorTotal = 0;
 
-            foreach (var items in listaCantidadProductos)
+            foreach (var productosItems in ListaItems)
             {
-                ValorTotal += items.Producto.PrecioUnidad * items.Cantidad;
+                ValorTotal += productosItems.Producto.PrecioUnidad * productosItems.Cantidad;
             }
 
-            Console.WriteLine($"\nEl valor total de la orden de compra es de: {ValorTotal}\n");
-            return ValorTotal;   
+            return ValorTotal;  
         }
 
+        public static void VisualizarOrdenesCompra(List<OrdenDeCompra> ordenes)
+        {
+            if (ordenes.Count == 0)
+            {
+                Console.WriteLine("No hay ordenes de compra registradas\n");
+                return;
+            }
+
+            Console.WriteLine("\nOrdenes de compra existentes");
+
+            foreach (var ordencompra in ordenes)
+            {
+                Console.WriteLine($"Orden N-{ordencompra.NumUnico}");
+                Console.WriteLine($"Fecha: {ordencompra.Fecha}");
+                Console.WriteLine($"Proveedor: {ordencompra.ProveedorSeleccionado.Nombre}");
+                Console.WriteLine($"Productos:");
+
+                decimal TotalOrdenCompra = 0;
+
+                foreach (var item in ordencompra.ListaItems)
+                { 
+                    decimal Subtotal = item.Producto.PrecioUnidad * item.Cantidad;
+
+                    Console.WriteLine($"{item.Producto.Nombre}\nCantidad: {item.Cantidad}");
+                    Console.WriteLine($"Subtotal: {Subtotal}");
+
+                    TotalOrdenCompra += Subtotal;
+                }
+
+                Console.WriteLine($"Total de la orden: {ordencompra.ValorTotalOrdenCompra()}");
+            }
+        }
     }
+
 }
+
 
 

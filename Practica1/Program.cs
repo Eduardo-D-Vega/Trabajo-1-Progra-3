@@ -1,16 +1,17 @@
 ﻿using Practica1;
+using System.Collections.Generic;
 
 List<Proveedor> proveedores = new List<Proveedor>();
 List<Producto> productos = new List<Producto>();
 List<OrdenDeCompra> ordenes = new List<OrdenDeCompra>();
-List<ListaItem> cantidadProducto = new List<ListaItem>(); 
+Inventario inventario = new Inventario(); 
 
 bool menu = true;
 
 do
 {
     MostrarMenu();
-    menu = ProcesarOpcionMenu(proveedores, productos, ordenes);
+    menu = ProcesarOpcionMenu(proveedores, productos, ordenes, inventario);
 
 } while (menu);
 
@@ -21,15 +22,15 @@ static void MostrarMenu()
     Console.WriteLine("2. Registrar producto");
     Console.WriteLine("3. Crear orden de compra");
     Console.WriteLine("4. Visualizar ordenes existentes");
-    Console.WriteLine("5. Actualizar inventario");
+    Console.WriteLine("5. Gestionar inventario");
     Console.WriteLine("6. Salir de la aplicacion");
 }
 
-bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, List<OrdenDeCompra> ordenDeCompras)
+bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, List<OrdenDeCompra> ordenDeCompras, Inventario inventario)
 {
     try
     {
-        Console.Write("Seleccione una opción: ");
+        Console.Write("Seleccione una opción ");
         int opcion = int.Parse(Console.ReadLine());
 
         switch (opcion)
@@ -38,36 +39,37 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                 Proveedor.RegistrarProveedor(proveedores);
                 break;
             case 2:
-                Producto.RegistrarProducto(productos);
+                Producto nuevoproducto = new Producto("", "", 0);
+                nuevoproducto.RegistrarProducto(productos);
+
+                inventario.AgregarProducto(nuevoproducto);
                 break;
             case 3:
                 if (proveedores.Count == 0)
                 {
-                    Console.WriteLine("Debe registrar un proveedor antes de crear una orden de compra\n");
-                    break; //vuelve al menu
+                     Console.WriteLine("No hay proveedores registrados\n");
+                    break;
                 }
 
                 if (productos.Count == 0)
                 {
-                    Console.WriteLine("La lista de productos esta vacía, agregue productos antes\n");
-                    break; 
+                    Console.WriteLine("No hay productos registrados\n");
+                    break;
                 }
 
-                OrdenDeCompra nuevo = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
-                nuevo.SeleccionarProveedor(proveedores);
-                nuevo.AgregarProductos(productos, cantidadProducto);
+                OrdenDeCompra nuevaOrden = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
+                nuevaOrden.SeleccionarProveedor(proveedores);
+                nuevaOrden.AgregarProductos(productos);
 
-                decimal ValorTotal = 0;
-                ValorTotal = nuevo.ValorTotalOrdenCompra(cantidadProducto);
-                Console.WriteLine($"\nEl valor de la orden de compra es de: {ValorTotal}");
-                ordenes.Add(nuevo);
+                ordenes.Add(nuevaOrden);
+
                 Console.WriteLine("La orden de compra fue creada correctamente\n");
                 break;
             case 4:
-                // Visualizar ordenes
+                OrdenDeCompra.VisualizarOrdenesCompra(ordenes);
                 break;
             case 5:
-                //ActualizarInventario
+                GestionInventario(inventario, ordenes);
                 break;
             case 6:
                 Console.WriteLine("Programa finalizado.");
@@ -83,4 +85,50 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
     }
 
     return true; //para que se siga mostrando el menu
+}
+
+void GestionInventario(Inventario inventario, List<OrdenDeCompra> ordenes)
+{
+    bool submenu = true;
+
+    while (submenu)
+    {
+        try
+        {
+            Console.WriteLine("\n===Gestion de inventario===");
+            Console.Write("1. Mostrar inventario\n");
+            Console.Write("2. Actualizar inventario\n");
+            Console.Write("2. Salir de gestión de inventario\n");
+
+            Console.WriteLine("Seleccione una de las opciones ");
+            int op = int.Parse(Console.ReadLine());
+
+            switch (op)
+            {
+                case 1:
+                    inventario.MostrarInventario();
+                    break;
+
+                case 2:
+                  Inventario.ActualizarOrdenesInventario(inventario, ordenes);
+                    break;
+
+                case 3:
+                    submenu = false;
+                    break;
+
+                default:
+                    Console.WriteLine("Opción invalida");
+                    break;
+            }
+        }
+        catch(FormatException)
+        {
+            Console.WriteLine("Error. Solo se permiten números validos ");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
 }
