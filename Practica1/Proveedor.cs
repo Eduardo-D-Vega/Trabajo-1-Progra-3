@@ -18,21 +18,79 @@ namespace Practica1
             Id = id;    
             Contacto = contacto;
         }
-        public static void RegistrarProveedor(List<Proveedor> proveedores) 
+        public static void RegistrarProveedor(List<Proveedor> proveedores)
         {
-            Console.WriteLine("\nIngrese el nombre del proveedor:");
-            string nombre = Console.ReadLine();
+            string nombre = "";
+            int id = 0;
+            int contacto = 0;
+            bool valido = false;
 
-            Console.WriteLine("Ingrese el número de identificación fiscal del proveedor:");
-            int id = int.Parse(Console.ReadLine());
+            do
+            {
+                try
+                {
+                    Console.WriteLine("\nIngrese el nombre del proveedor:");
+                    nombre = Console.ReadLine();
 
-            Console.WriteLine("Ingrese el contacto del proveedor:");
-            int contacto = int.Parse(Console.ReadLine());
+                    if (string.IsNullOrWhiteSpace(nombre) || !nombre.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+                    {
+                        throw new Exception("El nombre solo puede contener letras y espacios.");
+                    }
+
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
+
+            valido = false;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Ingrese el número de identificación fiscal del proveedor:");
+                    if (!int.TryParse(Console.ReadLine(), out id))
+                    {
+                        throw new Exception("El ID debe contener únicamente números.");
+                    }
+
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
+
+            valido = false;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Ingrese el contacto del proveedor:");
+                    if (!int.TryParse(Console.ReadLine(), out contacto))
+                    {
+                        throw new Exception("El contacto debe contener únicamente números.");
+                    }
+
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
 
             Proveedor nuevoproveedor = new Proveedor(nombre, id, contacto);
             proveedores.Add(nuevoproveedor);
 
-            Console.WriteLine("\nEl proveedor fue registrado correctamente\n");
+            Console.WriteLine("\n El proveedor fue registrado correctamente\n");
         }
+
     }
 }
