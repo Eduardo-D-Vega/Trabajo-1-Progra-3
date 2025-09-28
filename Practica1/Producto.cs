@@ -23,18 +23,44 @@ namespace Practica1
 
         public void RegistrarProducto(List<Producto> productos)
         {
-            Console.WriteLine("Ingrese el nombre del producto:");
-            Nombre = Console.ReadLine();
+            try
+            {
+                Console.WriteLine("Ingrese el nombre del producto:");
+                Nombre = Console.ReadLine();
 
-            Console.WriteLine("Ingrese la descripción del producto:");
-            Descripcion = (Console.ReadLine());
+                Console.WriteLine("Ingrese la descripción del producto:");
+                Descripcion = (Console.ReadLine());
+                //validacion de que el precio sea un numero
+                decimal precio;
+                while (true)
+                {
 
-            Console.WriteLine("Ingrese el precio por unidad:");
-            PrecioUnidad = decimal.Parse(Console.ReadLine());
+                    Console.WriteLine("Ingrese el precio por unidad:");
+                    string entrada = Console.ReadLine();
+                    if (decimal.TryParse(entrada, out precio))
+                    {
+                        PrecioUnidad = precio;
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error: El precio debe ser un número decimal válido. Inténtelo de nuevo.");
 
-            productos.Add(this); //se agrega la instancia a la lista principal
+                    }
+                }
 
-            Console.WriteLine("\nEl producto fue registrado correctamente\n");
+                productos.Add(this); //se agrega la instancia a la lista principal
+
+                Console.WriteLine("\nEl producto fue registrado correctamente\n");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error: El precio debe ser un número decimal válido.\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al registrar el produto: {ex.Message}\n");
+            }
         }
     }
 }

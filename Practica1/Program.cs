@@ -98,7 +98,7 @@ void GestionInventario(Inventario inventario, List<OrdenDeCompra> ordenes)
             Console.WriteLine("\n===Gestion de inventario===");
             Console.Write("1. Mostrar inventario\n");
             Console.Write("2. Actualizar inventario\n");
-            Console.Write("2. Salir de gestión de inventario\n");
+            Console.Write("3. Salir de gestión de inventario\n");
 
             Console.WriteLine("Seleccione una de las opciones ");
             int op = int.Parse(Console.ReadLine());
