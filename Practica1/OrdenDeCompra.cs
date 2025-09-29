@@ -13,7 +13,7 @@ namespace Practica1
         public int NumUnico { get; set; }
         private DateTime Fecha { get; set; }
         public Proveedor ProveedorSeleccionado { get; set; }
-        public Proveedor Proveedor { get; set; }
+        //public Proveedor Proveedor { get; set; }
         public List<ListaItem> ListaItems { get; set; }  //cada orden de compra tendra su propia lista de items
         public bool OrdenRecibida { get; set; } = false; 
 
