@@ -5,6 +5,7 @@ List<Proveedor> proveedores = new List<Proveedor>();
 List<Producto> productos = new List<Producto>();
 List<OrdenDeCompra> ordenes = new List<OrdenDeCompra>();
 Inventario inventario = new Inventario(); 
+List<ListaItem> itemsOrden = new List<ListaItem>();
 
 bool menu = true;
 
@@ -47,7 +48,7 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
             case 3:
                 if (proveedores.Count == 0)
                 {
-                     Console.WriteLine("No hay proveedores registrados\n");
+                    Console.WriteLine("No hay proveedores registrados\n");
                     break;
                 }
 
@@ -57,9 +58,19 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                     break;
                 }
 
+                //Se selección de proveedor
+                Proveedor proveedorTemporal = new Proveedor("", 0, 0);
+                proveedorTemporal.SeleccionarProveedor(proveedores);
+
                 OrdenDeCompra nuevaOrden = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
-                nuevaOrden.SeleccionarProveedor(proveedores);
-                nuevaOrden.AgregarProductos(productos);
+                nuevaOrden.ProveedorSeleccionado = proveedorTemporal.ProveedorSeleccionado;
+
+                //se crear la lista de items y se agrega productos
+                List<ListaItem> itemsOrden = new List<ListaItem>();
+                Producto productoTemp = new Producto("", "", 0);
+                productoTemp.AgregarProductos(productos, itemsOrden);
+
+                nuevaOrden.ListaItems = itemsOrden;
 
                 ordenes.Add(nuevaOrden);
 

@@ -92,5 +92,110 @@ namespace Practica1
             Console.WriteLine("\n El producto fue registrado correctamente\n");
         }
 
+        public void AgregarProductos(List<Producto> productos, List<ListaItem> listaItems)
+        {
+            if (productos.Count == 0)
+            {
+                Console.WriteLine("\n La lista de productos está vacía, debe registrar productos antes de continuar\n");
+                return; // vuelve al menú
+            }
+
+            bool continuar = true;
+            while (continuar)
+            {
+                int opcion = 0;
+                bool valido = false;
+
+                // Seleccionar producto
+                do
+                {
+                    try
+                    {
+                        Console.WriteLine("\nSeleccione un producto de la lista:");
+
+                        for (int i = 0; i < productos.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {productos[i].Nombre} - {productos[i].Descripcion} - [Precio: {productos[i].PrecioUnidad}]");
+                        }
+
+                        Console.Write("Ingrese el número de la opción: ");
+                        if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > productos.Count)
+                        {
+                            throw new Exception("Debe ingresar un número válido de la lista.");
+                        }
+
+                        valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        valido = false;
+                    }
+                } while (!valido);
+
+                Producto ProductoSeleccionado = productos[opcion - 1];
+
+                int cantidadProducto = 0;
+                valido = false;
+                do
+                {
+                    try
+                    {
+                        Console.Write("Ingrese la cantidad de productos que desea: ");
+                        if (!int.TryParse(Console.ReadLine(), out cantidadProducto) || cantidadProducto < 1)
+                        {
+                            throw new Exception("La cantidad debe ser un número mayor a cero.");
+                        }
+
+                        valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        valido = false;
+                    }
+                } while (!valido);
+
+                //se suman las cantidades si un producto ya existe en la orden de compra
+                var itemregistrado = listaItems.FirstOrDefault(i => i.Producto == ProductoSeleccionado);
+                if (itemregistrado != null)
+                {
+                    itemregistrado.Cantidad += cantidadProducto;
+                    Console.WriteLine($"\nLa cantidad del producto se actualizo a {itemregistrado.Cantidad}");
+                }
+
+                else
+                {
+                    listaItems.Add(new ListaItem(ProductoSeleccionado, cantidadProducto));
+                    Console.WriteLine("\n El producto fue agregado a la orden de compra.");
+                }
+
+                //Pregunta si desea seguir
+                string respuesta = "";
+                valido = false;
+                do
+                {
+                    try
+                    {
+                        Console.Write("\n¿Desea agregar otro producto? (si/no): ");
+                        respuesta = Console.ReadLine().Trim().ToLower();
+
+                        if (respuesta != "si" && respuesta != "no")
+                        {
+                            throw new Exception("Debe responder únicamente con 'si' o 'no'.");
+                        }
+
+                        valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        valido = false;
+                    }
+                } while (!valido);
+
+                continuar = (respuesta == "si");
+            }
+        }
     }
 }

@@ -61,6 +61,12 @@ namespace Practica1
                     return;
                 }
 
+                if (orden.OrdenRecibida)
+                {
+                    Console.WriteLine($"La orden N-{orden.NumUnico} ya ha sido recibida");
+                    return;
+                }
+
                 if (orden.ListaItems.Count == 0 || orden.ListaItems == null)
                 {
                     Console.WriteLine("La orden de compra no tiene products");
@@ -81,8 +87,9 @@ namespace Practica1
                         continue;
                     }
 
-                    item.Producto.almacen += item.Cantidad;  //se actualiza el inventario  
+                    item.Producto.almacen += item.Cantidad;  //se actualiza el inventario
                 }
+                orden.OrdenRecibida = true;
                 Console.WriteLine("El inventario ha sido actualizado");
             }
             catch (Exception ex)
