@@ -52,31 +52,14 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                 inventario.AgregarProducto(nuevoproducto);
                 break;
             case 3:
-                if (proveedores.Count == 0)
-                {
-                    Console.WriteLine("No hay proveedores registrados\n");
-                    break;
-                }
-
                 if (productos.Count == 0)
                 {
                     Console.WriteLine("No hay productos registrados\n");
                     break;
                 }
 
-                //Se selección de proveedor
-                Proveedor proveedorTemporal = new Proveedor("", 0, 0);
-                proveedorTemporal.SeleccionarProveedor(proveedores);
-
                 OrdenDeCompra nuevaOrden = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
-                nuevaOrden.ProveedorSeleccionado = proveedorTemporal.ProveedorSeleccionado;
-
-                //se crear la lista de items y se agrega productos
-                List<ListaItem> itemsOrden = new List<ListaItem>();
-                Producto productoTemp = new Producto("", "", 0);
-                productoTemp.AgregarProductos(productos, itemsOrden);
-
-                nuevaOrden.ListaItems = itemsOrden;
+                nuevaOrden.AgregarProductos(productos);
 
                 ordenes.Add(nuevaOrden);
 
