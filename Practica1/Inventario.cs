@@ -81,7 +81,7 @@ namespace Practica1
                         continue;
                     }
 
-                    item.Producto.almacen += item.Cantidad;//se actualiza el inventario  
+                    item.Producto.almacen += item.Cantidad;  //se actualiza el inventario  
                 }
                 Console.WriteLine("El inventario ha sido actualizado");
             }

@@ -13,7 +13,7 @@ namespace Practica1
         private int NumUnico { get; set; }
         private DateTime Fecha { get; set; }
         public Proveedor ProveedorSeleccionado { get; set; }
-        public List<ListaItem> ListaItems { get; set; }  //cada orden de compra tiene su propia lista de items
+        public List<ListaItem> ListaItems { get; set; }  //cada orden de compra tendra su propia lista de items
         public bool OrdenRecibida { get; set; } 
 
         public OrdenDeCompra(int id, DateTime fecha)
@@ -29,7 +29,7 @@ namespace Practica1
             if (proveedores.Count == 0)
             {
                 Console.WriteLine("\nNo hay proveedores registrados\n");
-                return; //Tiene que volver a pedir que seleccione un proveedor
+                return; //pide que seleccione un proveedor
             }
 
             Console.WriteLine("\nSeleccione un proveedor de la lista");
@@ -41,7 +41,7 @@ namespace Practica1
 
             int opcion = int.Parse(Console.ReadLine());
 
-            ProveedorSeleccionado = proveedores[opcion - 1];
+            ProveedorSeleccionado = proveedores[opcion - 1]; 
 
             Console.WriteLine($"El proveedor seleccionado es: {ProveedorSeleccionado.Nombre}\n");
         }
