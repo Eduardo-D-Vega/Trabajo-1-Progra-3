@@ -60,7 +60,6 @@ namespace Practica1
         }
 
 
-
         public void ActualizarInventario(OrdenDeCompra orden)
         {
             try
@@ -71,7 +70,6 @@ namespace Practica1
                     return;
                 }
 
-                if (orden.ListaItems == null || orden.ListaItems.Count == 0)
                 if (orden.OrdenRecibida)
                 {
                     Console.WriteLine($"La orden N-{orden.NumUnico} ya ha sido recibida");
@@ -97,8 +95,7 @@ namespace Practica1
                         Console.WriteLine("La cantidad es inválida");
                         continue;
                     }
-
-                    item.Producto.almacen += item.Cantidad; // Actualiza el inventario  
+                    
                     item.Producto.almacen += item.Cantidad;  //se actualiza el inventario
                 }
                 orden.OrdenRecibida = true;
@@ -108,7 +105,6 @@ namespace Practica1
             {
                 Console.WriteLine($"Ocurrió un error al actualizar el inventario: {ex.Message}");
             }
-
         }
 
         public static void ActualizarOrdenesInventario(Inventario inventario, List<OrdenDeCompra> ordenes)
@@ -121,7 +117,7 @@ namespace Practica1
                     return;
                 }
 
-                // Selecciona la última orden creada
+                //Selecciona la última orden creada
                 OrdenDeCompra actualizarOrden = ordenes[ordenes.Count - 1];
                 inventario.ActualizarInventario(actualizarOrden);
 

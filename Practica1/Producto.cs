@@ -12,7 +12,7 @@ namespace Practica1
         public string Descripcion { get; set; }
         public decimal PrecioUnidad { get; set; }
         public int almacen { get; set; }
-        public Proveedor ProveedorAsociado { get; set; }  // 👈 Nuevo campo
+        public Proveedor ProveedorAsociado { get; set; }
 
         public Producto(string nombre, string descripcion, decimal precio)
         {
@@ -33,7 +33,7 @@ namespace Practica1
             bool valido = false;
             int opcion = 0;
 
-            // === Selección de proveedor ===
+            
             do
             {
                 try
@@ -56,7 +56,7 @@ namespace Practica1
                 }
             } while (!valido);
 
-            // === Nombre ===
+            
             do
             {
                 try
@@ -73,7 +73,7 @@ namespace Practica1
                 }
             } while (!valido);
 
-            // === Descripción ===
+            
             do
             {
                 try
@@ -90,7 +90,7 @@ namespace Practica1
                 }
             } while (!valido);
 
-            // === Precio ===
+            
             decimal precio = 0;
             do
             {
