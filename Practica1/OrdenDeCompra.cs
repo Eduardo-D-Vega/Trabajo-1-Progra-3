@@ -10,7 +10,7 @@ namespace Practica1
 {
     public class OrdenDeCompra
     {
-        public int NumUnico { get; set; }
+        public int NumUnico { get; private set; }
         private DateTime Fecha { get; set; }
         public List<ListaItem> ListaItems { get; set; }
         public bool OrdenRecibida { get; set; }
