@@ -11,7 +11,8 @@ namespace Practica1
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal PrecioUnidad { get; set; }
-        public int almacen { get; set; } //cantidad de productos disponibles en el inventario
+        public int almacen { get; set; }
+        public Proveedor ProveedorAsociado { get; set; }  
 
         public Producto(string nombre, string descripcion, decimal precio)
         {
@@ -21,10 +22,46 @@ namespace Practica1
             almacen = 0;
         }
 
-        public void RegistrarProducto(List<Producto> productos)
+        public void RegistrarProducto(List<Producto> productos, List<Proveedor> proveedores)
         {
+            if (proveedores.Count == 0)
+            {
+                Console.WriteLine("\nDebe registrar al menos un proveedor antes de registrar un producto.\n");
+                return;
+            }
+
             bool valido = false;
 
+            // === Selección de proveedor ===
+            int opcion = 0;
+            do
+            {
+                try
+                {
+                    Console.WriteLine("\nSeleccione el proveedor para este producto:");
+
+                    for (int i = 0; i < proveedores.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {proveedores[i].Nombre}");
+                    }
+
+                    Console.Write("Ingrese el número de la opción: ");
+                    if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > proveedores.Count)
+                    {
+                        throw new Exception("Debe ingresar un número válido de la lista.");
+                    }
+
+                    ProveedorAsociado = proveedores[opcion - 1]; // 👈 Se asocia el proveedor
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
+
+            // === Nombre del producto ===
             do
             {
                 try
@@ -32,9 +69,9 @@ namespace Practica1
                     Console.WriteLine("Ingrese el nombre del producto:");
                     Nombre = Console.ReadLine();
 
-                    if (string.IsNullOrWhiteSpace(Nombre) || !Nombre.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+                    if (string.IsNullOrWhiteSpace(Nombre))
                     {
-                        throw new Exception("El nombre solo puede contener letras y espacios.");
+                        throw new Exception("El nombre no puede estar vacío.");
                     }
 
                     valido = true;
@@ -46,6 +83,7 @@ namespace Practica1
                 }
             } while (!valido);
 
+            // === Descripción ===
             do
             {
                 try
@@ -67,6 +105,7 @@ namespace Practica1
                 }
             } while (!valido);
 
+            // === Precio ===
             decimal precio = 0;
             do
             {
@@ -75,7 +114,7 @@ namespace Practica1
                     Console.WriteLine("Ingrese el precio por unidad:");
                     if (!decimal.TryParse(Console.ReadLine(), out precio) || precio <= 0)
                     {
-                        throw new Exception("El precio debe ser un número decimal válido mayor a 0.");
+                        throw new Exception("El precio debe ser un número válido mayor a 0.");
                     }
 
                     PrecioUnidad = precio;
@@ -89,8 +128,9 @@ namespace Practica1
             } while (!valido);
 
             productos.Add(this);
-            Console.WriteLine("\n El producto fue registrado correctamente\n");
+            Console.WriteLine($"\n El producto fue registrado correctamente con el proveedor {ProveedorAsociado.Nombre}\n");
         }
+<<<<<<< HEAD
 
         public void AgregarProductos(List<Producto> productos, List<ListaItem> listaItems)
         {
@@ -197,5 +237,7 @@ namespace Practica1
                 continuar = (respuesta == "si");
             }
         }
+=======
+>>>>>>> implementada capacidad para tener 2 productos iguales, pero de diferente proveedor y diferente precio para comparar
     }
 }

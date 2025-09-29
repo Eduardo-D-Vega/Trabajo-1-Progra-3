@@ -5,11 +5,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
+using System;
+using System.Collections.Generic;
+
 namespace Practica1
 {
     public class Inventario
     {
-        public List<Producto> productos { get; set; }  
+        public List<Producto> productos { get; set; }
 
         public Inventario()
         {
@@ -39,15 +42,21 @@ namespace Practica1
         {
             if (productos.Count == 0)
             {
-                Console.WriteLine("El inventario esta vacío, no hay productos registrados");
+                Console.WriteLine("El inventario está vacío, no hay productos registrados");
                 return;
             }
 
-            Console.WriteLine("\nINVENTARIO");
+            Console.WriteLine("\n=== INVENTARIO DE PRODUCTOS ===");
 
             foreach (var stock in productos)
             {
-                Console.WriteLine($"Producto: {stock.Nombre} - Stock: {stock.almacen}");
+                string proveedor = stock.ProveedorAsociado != null ? stock.ProveedorAsociado.Nombre : "Sin proveedor";
+                Console.WriteLine($"Producto: {stock.Nombre}");
+                Console.WriteLine($"Descripción: {stock.Descripcion}");
+                Console.WriteLine($"Precio: {stock.PrecioUnidad}");
+                Console.WriteLine($"Stock: {stock.almacen}");
+                Console.WriteLine($"Proveedor: {proveedor}");
+                Console.WriteLine("-------------------------------");
             }
         }
 
@@ -61,6 +70,7 @@ namespace Practica1
                     return;
                 }
 
+                if (orden.ListaItems == null || orden.ListaItems.Count == 0)
                 if (orden.OrdenRecibida)
                 {
                     Console.WriteLine($"La orden N-{orden.NumUnico} ya ha sido recibida");
@@ -69,7 +79,7 @@ namespace Practica1
 
                 if (orden.ListaItems.Count == 0 || orden.ListaItems == null)
                 {
-                    Console.WriteLine("La orden de compra no tiene products");
+                    Console.WriteLine("La orden de compra no tiene productos");
                     return;
                 }
 
@@ -87,6 +97,7 @@ namespace Practica1
                         continue;
                     }
 
+                    item.Producto.almacen += item.Cantidad; // Actualiza el inventario  
                     item.Producto.almacen += item.Cantidad;  //se actualiza el inventario
                 }
                 orden.OrdenRecibida = true;
@@ -94,21 +105,22 @@ namespace Practica1
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ocurrio un error al actualizar el inventario: {ex.Message}");
+                Console.WriteLine($"Ocurrió un error al actualizar el inventario: {ex.Message}");
             }
 
         }
+
         public static void ActualizarOrdenesInventario(Inventario inventario, List<OrdenDeCompra> ordenes)
         {
             try
             {
                 if (ordenes.Count == 0)
                 {
-                    Console.WriteLine("No hay ordenes de compras");
+                    Console.WriteLine("No hay órdenes de compra");
                     return;
                 }
 
-                //selecciona la ultima orden que fue creada
+                // Selecciona la última orden creada
                 OrdenDeCompra actualizarOrden = ordenes[ordenes.Count - 1];
                 inventario.ActualizarInventario(actualizarOrden);
 
@@ -118,7 +130,6 @@ namespace Practica1
                 Console.WriteLine($"Hubo un error al actualizar el inventario. Error: {ex.Message}");
             }
         }
-
     }
 }
 

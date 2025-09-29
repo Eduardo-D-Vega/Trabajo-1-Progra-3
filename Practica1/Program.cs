@@ -40,18 +40,27 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                 Proveedor.RegistrarProveedor(proveedores);
                 break;
             case 2:
+                if (proveedores.Count == 0)
+                {
+                    Console.WriteLine("Debe registrar al menos un proveedor antes de registrar productos.\n");
+                    break;
+                }
+
                 Producto nuevoproducto = new Producto("", "", 0);
-                nuevoproducto.RegistrarProducto(productos);
+                nuevoproducto.RegistrarProducto(productos, proveedores); // 👈 Se pasa lista de proveedores
 
                 inventario.AgregarProducto(nuevoproducto);
                 break;
             case 3:
+<<<<<<< HEAD
                 if (proveedores.Count == 0)
                 {
                     Console.WriteLine("No hay proveedores registrados\n");
                     break;
                 }
 
+=======
+>>>>>>> implementada capacidad para tener 2 productos iguales, pero de diferente proveedor y diferente precio para comparar
                 if (productos.Count == 0)
                 {
                     Console.WriteLine("No hay productos registrados\n");
@@ -63,6 +72,7 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                 proveedorTemporal.SeleccionarProveedor(proveedores);
 
                 OrdenDeCompra nuevaOrden = new OrdenDeCompra(ordenes.Count + 1, DateTime.Now);
+<<<<<<< HEAD
                 nuevaOrden.ProveedorSeleccionado = proveedorTemporal.ProveedorSeleccionado;
 
                 //se crear la lista de items y se agrega productos
@@ -71,11 +81,15 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                 productoTemp.AgregarProductos(productos, itemsOrden);
 
                 nuevaOrden.ListaItems = itemsOrden;
+=======
+                nuevaOrden.AgregarProductos(productos);
+>>>>>>> implementada capacidad para tener 2 productos iguales, pero de diferente proveedor y diferente precio para comparar
 
                 ordenes.Add(nuevaOrden);
 
                 Console.WriteLine("La orden de compra fue creada correctamente\n");
                 break;
+
             case 4:
                 OrdenDeCompra.VisualizarOrdenesCompra(ordenes);
                 break;
