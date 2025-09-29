@@ -65,7 +65,6 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
 
                 Console.WriteLine("La orden de compra fue creada correctamente\n");
                 break;
-
             case 4:
                 OrdenDeCompra.VisualizarOrdenesCompra(ordenes);
                 break;
