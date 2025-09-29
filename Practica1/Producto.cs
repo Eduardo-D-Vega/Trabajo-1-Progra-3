@@ -23,44 +23,74 @@ namespace Practica1
 
         public void RegistrarProducto(List<Producto> productos)
         {
-            try
-            {
-                Console.WriteLine("Ingrese el nombre del producto:");
-                Nombre = Console.ReadLine();
+            bool valido = false;
 
-                Console.WriteLine("Ingrese la descripción del producto:");
-                Descripcion = (Console.ReadLine());
-                //validacion de que el precio sea un numero
-                decimal precio;
-                while (true)
+            do
+            {
+                try
                 {
+                    Console.WriteLine("Ingrese el nombre del producto:");
+                    Nombre = Console.ReadLine();
 
-                    Console.WriteLine("Ingrese el precio por unidad:");
-                    string entrada = Console.ReadLine();
-                    if (decimal.TryParse(entrada, out precio))
+                    if (string.IsNullOrWhiteSpace(Nombre) || !Nombre.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
                     {
-                        PrecioUnidad = precio;
-                        break;
+                        throw new Exception("El nombre solo puede contener letras y espacios.");
                     }
-                    else
-                    {
-                        Console.WriteLine("Error: El precio debe ser un número decimal válido. Inténtelo de nuevo.");
 
-                    }
+                    valido = true;
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
 
-                productos.Add(this); //se agrega la instancia a la lista principal
+            do
+            {
+                try
+                {
+                    Console.WriteLine("Ingrese la descripción del producto:");
+                    Descripcion = Console.ReadLine();
 
-                Console.WriteLine("\nEl producto fue registrado correctamente\n");
-            }
-            catch (FormatException)
+                    if (string.IsNullOrWhiteSpace(Descripcion))
+                    {
+                        throw new Exception("La descripción no puede estar vacía.");
+                    }
+
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
+
+            decimal precio = 0;
+            do
             {
-                Console.WriteLine("Error: El precio debe ser un número decimal válido.\n");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al registrar el produto: {ex.Message}\n");
-            }
+                try
+                {
+                    Console.WriteLine("Ingrese el precio por unidad:");
+                    if (!decimal.TryParse(Console.ReadLine(), out precio) || precio <= 0)
+                    {
+                        throw new Exception("El precio debe ser un número decimal válido mayor a 0.");
+                    }
+
+                    PrecioUnidad = precio;
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
+
+            productos.Add(this);
+            Console.WriteLine("\n✅ El producto fue registrado correctamente\n");
         }
+
     }
 }
