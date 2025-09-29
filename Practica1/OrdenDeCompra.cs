@@ -137,10 +137,33 @@ namespace Practica1
                 Console.WriteLine("\n El producto fue agregado a la orden de compra.");
 
                 // Preguntar si desea seguir
-                Console.Write("\n¿Desea agregar otro producto? (si/no): ");
-                continuar = Console.ReadLine().Trim().ToLower() == "si";
+                string respuesta = "";
+                valido = false;
+                do
+                {
+                    try
+                    {
+                        Console.Write("\n¿Desea agregar otro producto? (si/no): ");
+                        respuesta = Console.ReadLine().Trim().ToLower();
+
+                        if (respuesta != "si" && respuesta != "no")
+                        {
+                            throw new Exception("Debe responder únicamente con 'si' o 'no'.");
+                        }
+
+                        valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        valido = false;
+                    }
+                } while (!valido);
+
+                continuar = (respuesta == "si");
             }
         }
+
 
 
         public decimal ValorTotalOrdenCompra()

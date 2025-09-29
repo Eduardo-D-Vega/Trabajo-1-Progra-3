@@ -89,7 +89,7 @@ namespace Practica1
             } while (!valido);
 
             productos.Add(this);
-            Console.WriteLine("\n✅ El producto fue registrado correctamente\n");
+            Console.WriteLine("\n El producto fue registrado correctamente\n");
         }
 
     }
