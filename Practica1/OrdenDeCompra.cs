@@ -28,61 +28,120 @@ namespace Practica1
         {
             if (proveedores.Count == 0)
             {
-                Console.WriteLine("\nNo hay proveedores registrados\n");
-                return; //pide que seleccione un proveedor
+                Console.WriteLine("\n No hay proveedores registrados\n");
+                return; // vuelve al menú principal
             }
 
-            Console.WriteLine("\nSeleccione un proveedor de la lista");
+            int opcion = 0;
+            bool valido = false;
 
-            for (int i = 0; i < proveedores.Count; i++)
+            do
             {
-                Console.WriteLine($"{i + 1}. {proveedores[i].Nombre}");
-            }
+                try
+                {
+                    Console.WriteLine("\nSeleccione un proveedor de la lista:");
 
-            int opcion = int.Parse(Console.ReadLine());
+                    for (int i = 0; i < proveedores.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {proveedores[i].Nombre}");
+                    }
 
-            ProveedorSeleccionado = proveedores[opcion - 1]; 
+                    string entrada = Console.ReadLine().Trim();
+                    if (!int.TryParse(entrada, out opcion) || opcion < 1 || opcion > proveedores.Count)
+                    {
+                        throw new Exception("Debe ingresar un número válido entre 1 y " + proveedores.Count);
+                    }
 
-            Console.WriteLine($"El proveedor seleccionado es: {ProveedorSeleccionado.Nombre}\n");
+
+                    valido = true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    valido = false;
+                }
+            } while (!valido);
+
+            ProveedorSeleccionado = proveedores[opcion - 1];
+            Console.WriteLine($"\n El proveedor seleccionado es: {ProveedorSeleccionado.Nombre}\n");
         }
-        
+
+
         public void AgregarProductos(List<Producto> productos)
         {
-            while (productos.Count == 0)
+            if (productos.Count == 0)
             {
-                Console.WriteLine("La lista está vacía, debe agregar productos antes de continuar\n");
-                return; //vuelve al menu
+                Console.WriteLine("\n La lista de productos está vacía, debe registrar productos antes de continuar\n");
+                return; // vuelve al menú
             }
 
             bool continuar = true;
             while (continuar)
             {
-                Console.WriteLine("Seleccione un producto de la lista");
+                int opcion = 0;
+                bool valido = false;
 
-                for (int i = 0; i < productos.Count; i++)
+                // Seleccionar producto
+                do
                 {
-                    Console.WriteLine($"{i + 1} {productos[i].Nombre} - {productos[i].Descripcion} - [Precio: {productos[i].PrecioUnidad}]");
-                }
+                    try
+                    {
+                        Console.WriteLine("\nSeleccione un producto de la lista:");
 
-                int opcion = int.Parse(Console.ReadLine());
+                        for (int i = 0; i < productos.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {productos[i].Nombre} - {productos[i].Descripcion} - [Precio: {productos[i].PrecioUnidad}]");
+                        }
+
+                        Console.Write("Ingrese el número de la opción: ");
+                        if (!int.TryParse(Console.ReadLine(), out opcion) || opcion < 1 || opcion > productos.Count)
+                        {
+                            throw new Exception("Debe ingresar un número válido de la lista.");
+                        }
+
+                        valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        valido = false;
+                    }
+                } while (!valido);
+
                 Producto ProductoSeleccionado = productos[opcion - 1];
 
-                Console.WriteLine("Ingrese la cantidad de productos que desea: ");
-                int cantidadProducto = int.Parse(Console.ReadLine());
-
-                if (cantidadProducto < 1)
+                // Ingresar cantidad
+                int cantidadProducto = 0;
+                valido = false;
+                do
                 {
-                    Console.WriteLine("La cantidad ingresada debe ser mayor a cero\n");
-                    continue;
-                }
+                    try
+                    {
+                        Console.Write("Ingrese la cantidad de productos que desea: ");
+                        if (!int.TryParse(Console.ReadLine(), out cantidadProducto) || cantidadProducto < 1)
+                        {
+                            throw new Exception("La cantidad debe ser un número mayor a cero.");
+                        }
 
+                        valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                        valido = false;
+                    }
+                } while (!valido);
+
+                // Agregar a la lista de items
                 ListaItems.Add(new ListaItem(ProductoSeleccionado, cantidadProducto));
-                Console.WriteLine("\nEl producto fue agregado a la orden de compra");
+                Console.WriteLine("\n El producto fue agregado a la orden de compra.");
 
-                Console.Write("¿Digite 'si o no' si desea agregar otro producto? ");
-                continuar = Console.ReadLine().ToLower() == "si";
+                // Preguntar si desea seguir
+                Console.Write("\n¿Desea agregar otro producto? (si/no): ");
+                continuar = Console.ReadLine().Trim().ToLower() == "si";
             }
         }
+
 
         public decimal ValorTotalOrdenCompra()
         {
