@@ -17,10 +17,17 @@ namespace Practica1
 
     public OrdenDeCompra(int id, DateTime fecha)
     {
+<<<<<<< HEAD
         NumUnico = id;
         Fecha = fecha;
         ListaItems = new List<ListaItem>();
     }
+=======
+        private int NumUnico { get; set; }
+        private DateTime Fecha { get; set; }
+        public List<ListaItem> ListaItems { get; set; }
+        public bool OrdenRecibida { get; set; }
+>>>>>>> parent of 0963705 (solucion error en orden de compra)
 
     public void AgregarProductos(List<Producto> productos)
     {
