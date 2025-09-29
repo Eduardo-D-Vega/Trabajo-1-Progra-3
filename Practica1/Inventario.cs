@@ -60,6 +60,7 @@ namespace Practica1
         }
 
 
+
         public void ActualizarInventario(OrdenDeCompra orden)
         {
             try
