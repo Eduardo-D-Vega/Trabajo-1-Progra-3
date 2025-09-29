@@ -130,7 +130,6 @@ namespace Practica1
             productos.Add(this);
             Console.WriteLine($"\n El producto fue registrado correctamente con el proveedor {ProveedorAsociado.Nombre}\n");
         }
-<<<<<<< HEAD
 
         public void AgregarProductos(List<Producto> productos, List<ListaItem> listaItems)
         {
@@ -237,7 +236,5 @@ namespace Practica1
                 continuar = (respuesta == "si");
             }
         }
-=======
->>>>>>> implementada capacidad para tener 2 productos iguales, pero de diferente proveedor y diferente precio para comparar
     }
 }
