@@ -47,7 +47,7 @@ bool ProcesarOpcionMenu(List<Proveedor> proveedores, List<Producto> productos, L
                 }
 
                 Producto nuevoproducto = new Producto("", "", 0);
-                nuevoproducto.RegistrarProducto(productos, proveedores); // 👈 Se pasa lista de proveedores
+                nuevoproducto.RegistrarProducto(productos, proveedores); // Se pasa lista de proveedores
 
                 inventario.AgregarProducto(nuevoproducto);
                 break;
